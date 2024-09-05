@@ -1,0 +1,15 @@
+import heapq
+def k_closest_points(points, k):
+    def distance(point):
+        return point[0] ** 2 + point[1] ** 2
+    max_heap = []
+    for point in points:
+        dist = distance(point)
+        if len(max_heap) < k:
+            heapq.heappush(max_heap, (-dist, point))
+        else:
+            heapq.heappushpop(max_heap, (-dist, point))
+    return [point for _, point in max_heap]
+points = [[1, 3], [-2, 2], [5, 8], [0, 1]]
+k = 2
+print(k_closest_points(points, k))  # Output: [[-2, 2], [0, 1]]
