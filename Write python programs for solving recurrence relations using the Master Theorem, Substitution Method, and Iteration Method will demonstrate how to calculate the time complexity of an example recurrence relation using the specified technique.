@@ -1,0 +1,41 @@
+Master Theorem
+import math
+
+a = 2
+b = 2
+f_n = lambda n: n
+
+def master_theorem(a, b, f_n, n):
+    log_b_a = math.log(a) / math.log(b)
+    complexity = n ** log_b_a
+    if f_n(n) == complexity:
+        return f"Θ(n^{log_b_a} log n)"
+    elif f_n(n) < complexity:
+        return f"Θ(n^{log_b_a})"
+    else:
+        return f"Θ(f(n))"
+
+print(master_theorem(a, b, f_n, 8))
+
+substitutio method:
+
+def substitution_method(n):
+    T = lambda n: 2 * T(n // 2) + n if n > 1 else 1
+    guess = lambda n: n * math.log(n, 2) if n > 1 else 1
+    for n in [2**i for i in range(1, 10)]:
+        if T(n) > 2 * guess(n):
+            return "The guess is incorrect"
+    return "The guess is correct"
+
+print(substitution_method(8))
+
+
+Iteration method:
+def iteration_method(n):
+    T = 0
+    while n > 1:
+        T += n
+        n //= 2
+    return f"Time Complexity: O(n log n)"
+
+print(iteration_method(8))
