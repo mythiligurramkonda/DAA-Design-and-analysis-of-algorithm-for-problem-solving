@@ -1,0 +1,17 @@
+def sort_by_index(nums):
+    odds = [num for num in nums if num % 2 != 0]
+    evens = [num for num in nums if num % 2 == 0]
+    result = [0] * len(nums)
+    odd_index = 1
+    even_index = 0
+    for num in odds:
+        if odd_index < len(nums):
+            result[odd_index] = num
+            odd_index += 2
+    for num in evens:
+        if even_index < len(nums):
+            result[even_index] = num
+            even_index += 2
+    return result
+nums = [3, 1, 4, 2, 5, 6]
+print(sort_by_index(nums))  # Output: [4, 3, 2, 1, 6, 5] or any valid arrangement
