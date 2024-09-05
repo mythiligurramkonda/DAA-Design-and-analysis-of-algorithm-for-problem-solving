@@ -1,0 +1,23 @@
+from itertools import combinations
+
+def meet_in_the_middle(arr, target):
+    def get_sums(subset):
+        return {sum(combo) for i in range(len(subset) + 1) for combo in combinations(subset, i)}
+
+    n = len(arr)
+    left_half = arr[:n // 2]
+    right_half = arr[n // 2:]
+    
+    left_sums = get_sums(left_half)
+    right_sums = get_sums(right_half)
+    
+    for s in left_sums:
+        if (target - s) in right_sums:
+            return True
+    return False
+
+# Example usage
+if __name__ == "__main__":
+    arr = [3, 34, 4, 12, 5, 2]
+    target = 9
+    print("Subset with target sum exists:", meet_in_the_middle(arr, target))
