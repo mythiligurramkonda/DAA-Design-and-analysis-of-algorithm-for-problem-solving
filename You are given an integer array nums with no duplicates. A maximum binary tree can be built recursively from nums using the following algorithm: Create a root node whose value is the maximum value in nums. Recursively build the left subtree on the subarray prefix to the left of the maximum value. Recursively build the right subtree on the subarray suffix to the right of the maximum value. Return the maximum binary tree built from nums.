@@ -1,0 +1,26 @@
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def construct_maximum_binary_tree(nums):
+    def build(start, end):
+        if start > end:
+            return None
+        i = max(range(start, end + 1), key=lambda x: nums[x])
+        return TreeNode(nums[i], build(start, i - 1), build(i + 1, end))
+    
+    return build(0, len(nums) - 1)
+
+# Example usage
+nums = [3, 2, 1, 6, 0, 5]
+root = construct_maximum_binary_tree(nums)
+
+def print_preorder(node):
+    if node:
+        print(node.val, end=' ')
+        print_preorder(node.left)
+        print_preorder(node.right)
+
+print_preorder(root)
