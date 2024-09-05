@@ -1,0 +1,14 @@
+def count_digits(n):
+    if n == 0:
+        return 1
+    return int(math.log10(n)) + 1
+def armstrong_recursive(n, power):
+    if n == 0:
+        return 0
+    last_digit = n % 10
+    return (last_digit ** power) + armstrong_recursive(n // 10, power)
+def is_armstrong(n):
+    power = count_digits(n)
+    return n == armstrong_recursive(n, power)
+num = 153
+print(is_armstrong(num))  # Output: True (153 is an Armstrong number)
