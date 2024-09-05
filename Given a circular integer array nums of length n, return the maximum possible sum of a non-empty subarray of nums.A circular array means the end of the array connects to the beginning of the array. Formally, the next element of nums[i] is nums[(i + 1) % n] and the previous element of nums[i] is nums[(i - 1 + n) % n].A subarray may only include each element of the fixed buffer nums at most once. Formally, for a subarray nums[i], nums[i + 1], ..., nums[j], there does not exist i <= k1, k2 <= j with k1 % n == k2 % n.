@@ -1,0 +1,18 @@
+def max_subarray_sum_circular(nums):
+    def kadane(arr):
+        max_sum = cur_sum = arr[0]
+        for num in arr[1:]:
+            cur_sum = max(num, cur_sum + num)
+            max_sum = max(max_sum, cur_sum)
+        return max_sum
+    
+    total_sum = sum(nums)
+    max_normal = kadane(nums)
+    min_normal = kadane([-x for x in nums])
+    max_circular = total_sum + min_normal
+    
+    return max(max_normal, max_circular) if max_normal > 0 else max_normal
+
+# Example usage
+nums = [1, -2, 3, -2]
+print(max_subarray_sum_circular(nums))  # Output: 3
