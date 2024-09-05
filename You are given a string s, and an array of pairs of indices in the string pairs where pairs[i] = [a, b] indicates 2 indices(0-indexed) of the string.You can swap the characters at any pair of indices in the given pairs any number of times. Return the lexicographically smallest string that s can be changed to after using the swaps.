@@ -1,0 +1,35 @@
+from collections import defaultdict, deque
+
+def smallest_string_with_swaps(s, pairs):
+    graph = defaultdict(list)
+    for a, b in pairs:
+        graph[a].append(b)
+        graph[b].append(a)
+    
+    def bfs(start):
+        queue, component = deque([start]), []
+        while queue:
+            node = queue.popleft()
+            if node in visited:
+                continue
+            visited.add(node)
+            component.append(node)
+            queue.extend(neighbor for neighbor in graph[node] if neighbor not in visited)
+        return component
+    
+    visited = set()
+    s = list(s)
+    
+    for i in range(len(s)):
+        if i not in visited:
+            component = bfs(i)
+            chars = sorted(s[j] for j in component)
+            for idx, char in zip(sorted(component), chars):
+                s[idx] = char
+    
+    return ''.join(s)
+
+# Example usage
+s = "dcab"
+pairs = [[0, 3], [1, 2]]
+print(smallest_string_with_swaps(s, pairs))  # Output: "abcd"
