@@ -1,0 +1,14 @@
+def is_prime(n, divisor=2):
+    if n <= 1:
+        return False
+    if divisor * divisor > n:
+        return True
+    if n % divisor == 0:
+        return False
+    return is_prime(n, divisor + 1)
+def generate_primes(limit, num=2):
+    if num > limit:
+        return []
+    return ([num] if is_prime(num) else []) + generate_primes(limit, num + 1)
+limit = 30
+print(generate_primes(limit))  # Output: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
