@@ -1,0 +1,15 @@
+def sort_odds_evens(nums):
+    odds = []
+    evens = []
+    
+    for num in nums:
+        if num % 2 == 0:
+            evens.append(num)
+        else:
+            odds.append(num)
+    
+    return odds + evens
+
+# Example usage
+nums = [3, 1, 4, 2, 5, 6]
+print(sort_odds_evens(nums))  # Output: [3, 1, 5, 4, 2, 6]
