@@ -1,0 +1,14 @@
+a=[2,4,6,8]
+for i in a:
+{
+max=a[0]
+min=a[0]
+if(a[0]>a[i]):
+{
+max=a[i]
+if(a[0]<a[i]):
+{
+min=a[i]
+print("maximum element in array is:,max)
+print("minimum element in array is:,min)
+
