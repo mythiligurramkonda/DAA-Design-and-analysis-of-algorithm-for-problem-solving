@@ -1,0 +1,22 @@
+def max_non_adjacent_sum(nums):
+    include, exclude = 0, 0
+    for num in nums:
+        new_exclude = max(include, exclude)
+        include = exclude + num
+        exclude = new_exclude
+    return max(include, exclude)
+
+def sum_of_answers(nums, queries):
+    MOD = 10**9 + 7
+    total_sum = 0
+    
+    for pos, x in queries:
+        nums[pos] = x
+        total_sum = (total_sum + max_non_adjacent_sum(nums)) % MOD
+    
+    return total_sum
+
+# Example usage
+nums = [3, 2, 5, 10, 7]
+queries = [[1, 10], [2, 8], [0, 4]]
+print(sum_of_answers(nums, queries))  
