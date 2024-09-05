@@ -1,0 +1,26 @@
+import time
+def constant_time_example(n):
+    return n
+def logarithmic_time_example(n):
+    i = 1
+    while i < n:
+        i *= 2
+def linear_time_example(n):
+    for i in range(n):
+        pass
+def quadratic_time_example(n):
+    for i in range(n):
+        for j in range(n):
+            pass
+def measure_time(func, n):
+    start = time.time()
+    func(n)
+    return time.time() - start
+input_sizes = [10, 100, 1000, 10000]
+for size in input_sizes:
+    print(f"Input size: {size}")
+    print(f"Constant Time: {measure_time(constant_time_example, size):.6f} seconds")
+    print(f"Logarithmic Time: {measure_time(logarithmic_time_example, size):.6f} seconds")
+    print(f"Linear Time: {measure_time(linear_time_example, size):.6f} seconds")
+    print(f"Quadratic Time: {measure_time(quadratic_time_example, size):.6f} seconds")
+    print("-" * 40)
