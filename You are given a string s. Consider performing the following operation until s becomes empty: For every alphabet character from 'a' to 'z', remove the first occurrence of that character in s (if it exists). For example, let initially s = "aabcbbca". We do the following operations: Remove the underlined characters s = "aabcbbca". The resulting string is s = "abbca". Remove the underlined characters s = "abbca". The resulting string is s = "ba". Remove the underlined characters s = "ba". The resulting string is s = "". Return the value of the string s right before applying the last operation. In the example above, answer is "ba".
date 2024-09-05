@@ -1,0 +1,14 @@
+def string_before_last_operation(s):
+    while s:
+        for char in 'abcdefghijklmnopqrstuvwxyz':
+            if char in s:
+                s = s.replace(char, '', 1)
+        if not s:
+            return prev_s
+        prev_s = s
+    
+    return prev_s
+
+# Example usage
+s = "aabcbbca"
+print(string_before_last_operation(s))  # Output: "ba"
