@@ -1,14 +1,17 @@
-a=[2,4,6,8]
+a = [2, 4, 6, 8]
+
+# Initialize max and min with the first element of the list
+max_value = a[0]
+min_value = a[0]
+
+# Iterate over each element in the list
 for i in a:
-{
-max=a[0]
-min=a[0]
-if(a[0]>a[i]):
-{
-max=a[i]
-if(a[0]<a[i]):
-{
-min=a[i]
-print("maximum element in array is:,max)
-print("minimum element in array is:,min)
+    if i > max_value:
+        max_value = i
+    if i < min_value:
+        min_value = i
+
+print(f"Maximum element in array is: {max_value}")
+print(f"Minimum element in array is: {min_value}")
+
 
