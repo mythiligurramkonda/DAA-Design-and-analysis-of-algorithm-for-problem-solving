@@ -1,0 +1,33 @@
+import math
+
+def findCity(n, edges, distanceThreshold):
+    # Initialize the distance matrix
+    dist = [[math.inf] * n for _ in range(n)]
+    for i in range(n):
+        dist[i][i] = 0
+    
+    # Set up initial distances from edges
+    for u, v, weight in edges:
+        dist[u][v] = weight
+        dist[v][u] = weight
+    
+    # Apply Floyd-Warshall Algorithm
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][j] > dist[i][k] + dist[k][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    
+    # Count reachable cities within distanceThreshold
+    min_reachable_count = math.inf
+    best_city = -1
+    
+    for i in range(n):
+        reachable_count = sum(1 for j in range(n) if dist[i][j] <= distanceThreshold)
+        
+        # Select the city with the smallest number of reachable cities, and in case of tie, choose the city with the greatest number
+        if reachable_count < min_reachable_count or (reachable_count == min_reachable_count and i > best_city):
+            min_reachable_count = reachable_count
+            best_city = i
+    
+    return best_city
