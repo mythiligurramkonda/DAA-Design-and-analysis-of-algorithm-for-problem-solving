@@ -1,0 +1,18 @@
+def climb_stairs(n):
+    if n == 0:
+        return 1
+    if n == 1:
+        return 1    
+    dp = [0] * (n + 1)
+    dp[0] = 1  # Base case: 1 way to stay at the ground
+    dp[1] = 1  # Base case: 1 way to reach the first step
+    for i in range(2, n + 1):
+        dp[i] = dp[i - 1] + dp[i - 2]    
+    return dp[n]
+def main():
+    n1 = 4
+    print("Number of distinct ways to climb to the top for n =", n1, "is", climb_stairs(n1))    
+    n2 = 3
+    print("Number of distinct ways to climb to the top for n =", n2, "is", climb_stairs(n2))
+if __name__ == "__main__":
+    main()
