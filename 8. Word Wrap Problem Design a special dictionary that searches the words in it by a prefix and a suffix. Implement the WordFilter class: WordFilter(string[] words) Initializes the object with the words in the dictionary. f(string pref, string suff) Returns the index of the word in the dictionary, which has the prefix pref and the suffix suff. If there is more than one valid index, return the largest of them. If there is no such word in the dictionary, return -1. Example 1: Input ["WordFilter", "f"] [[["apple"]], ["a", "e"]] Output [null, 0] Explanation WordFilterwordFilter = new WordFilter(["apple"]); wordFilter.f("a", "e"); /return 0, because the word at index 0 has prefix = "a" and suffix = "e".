@@ -1,0 +1,34 @@
+from collections import defaultdict
+
+class WordFilter:
+    def __init__(self, words):
+        self.prefix_map = defaultdict(set)
+        self.suffix_map = defaultdict(set)
+        
+        # Populate the maps with all prefixes and suffixes for each word
+        for index, word in enumerate(words):
+            # Generate all prefixes
+            for i in range(len(word) + 1):
+                prefix = word[:i]
+                self.prefix_map[prefix].add(index)
+                
+            # Generate all suffixes
+            for i in range(len(word) + 1):
+                suffix = word[i:]
+                self.suffix_map[suffix].add(index)
+    
+    def f(self, pref, suff):
+        # Find all indices that have the prefix
+        prefix_indices = self.prefix_map.get(pref, set())
+        # Find all indices that have the suffix
+        suffix_indices = self.suffix_map.get(suff, set())
+        
+        # Find the intersection of both sets to get valid indices
+        valid_indices = prefix_indices & suffix_indices
+        
+        # Return the maximum index from the valid indices, or -1 if no valid index
+        return max(valid_indices, default=-1)
+
+# Example usage
+wordFilter = WordFilter(["apple"])
+print(wordFilter.f("a", "e"))  # Output: 0
