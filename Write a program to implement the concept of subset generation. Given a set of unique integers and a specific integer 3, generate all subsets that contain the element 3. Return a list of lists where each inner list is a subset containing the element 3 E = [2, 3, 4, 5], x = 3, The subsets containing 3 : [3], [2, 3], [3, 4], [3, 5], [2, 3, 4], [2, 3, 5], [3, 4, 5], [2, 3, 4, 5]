@@ -1,0 +1,23 @@
+def generate_subsets_with_element(nums, x):
+    def backtrack(start, path):
+        # Only add subsets that contain x
+        if x in path:
+            result.append(path[:])
+        for i in range(start, len(nums)):
+            path.append(nums[i])
+            backtrack(i + 1, path)
+            path.pop()
+    
+    nums.sort()  # Optional: for consistent order in subsets
+    result = []
+    backtrack(0, [])
+    return [subset for subset in result if x in subset]
+
+def main():
+    E = [2, 3, 4, 5]
+    x = 3
+    subsets_containing_x = generate_subsets_with_element(E, x)
+    print("Subsets containing", x, ":", subsets_containing_x)
+
+if __name__ == "__main__":
+    main()
