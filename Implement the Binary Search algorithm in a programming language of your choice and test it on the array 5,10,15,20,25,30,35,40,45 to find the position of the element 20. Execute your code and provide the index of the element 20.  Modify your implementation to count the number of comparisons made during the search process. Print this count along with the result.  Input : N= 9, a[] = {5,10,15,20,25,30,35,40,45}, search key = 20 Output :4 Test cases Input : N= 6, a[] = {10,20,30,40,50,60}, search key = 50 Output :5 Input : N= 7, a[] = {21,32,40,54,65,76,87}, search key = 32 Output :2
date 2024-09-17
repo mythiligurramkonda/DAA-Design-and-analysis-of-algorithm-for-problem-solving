@@ -1,0 +1,30 @@
+def binary_search(arr, key):
+    left, right = 0, len(arr) - 1
+    comparisons = 0
+
+    while left <= right:
+        comparisons += 1
+        mid = left + (right - left) // 2
+        
+        if arr[mid] == key:
+            return mid, comparisons
+        elif arr[mid] < key:
+            left = mid + 1
+        else:
+            right = mid - 1
+    
+    return -1, comparisons
+
+# Test cases
+test_cases = [
+    (9, [5, 10, 15, 20, 25, 30, 35, 40, 45], 20),
+    (6, [10, 20, 30, 40, 50, 60], 50),
+    (7, [21, 32, 40, 54, 65, 76, 87], 32)
+]
+
+for N, arr, key in test_cases:
+    index, comparisons = binary_search(arr, key)
+    print(f'Input: N={N}, a[]={arr}, search key={key}')
+    print(f'Output: {index}')
+    print(f'Comparisons: {comparisons}')
+    print('---')
