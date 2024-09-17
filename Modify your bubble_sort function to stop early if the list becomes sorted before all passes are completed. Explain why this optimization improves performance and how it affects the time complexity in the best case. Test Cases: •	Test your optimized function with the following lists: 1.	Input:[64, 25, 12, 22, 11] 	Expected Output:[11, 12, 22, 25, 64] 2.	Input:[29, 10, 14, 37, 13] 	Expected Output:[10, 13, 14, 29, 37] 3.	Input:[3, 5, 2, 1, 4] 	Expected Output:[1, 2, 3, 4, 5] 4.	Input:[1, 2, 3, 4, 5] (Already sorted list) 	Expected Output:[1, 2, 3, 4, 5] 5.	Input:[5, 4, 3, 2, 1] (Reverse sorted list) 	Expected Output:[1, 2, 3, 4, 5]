@@ -1,0 +1,49 @@
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        swapped = False
+        # Perform a pass through the array
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                # Swap if the element is greater than the next element
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        # If no elements were swapped, the list is sorted
+        if not swapped:
+            break
+    return arr
+
+# Test cases
+def test_bubble_sort():
+    # Test Case 1: Random unsorted list
+    print("Test Case 1:")
+    arr = [64, 25, 12, 22, 11]
+    print("Input:", arr)
+    print("Output:", bubble_sort(arr))
+    
+    # Test Case 2: Random unsorted list
+    print("Test Case 2:")
+    arr = [29, 10, 14, 37, 13]
+    print("Input:", arr)
+    print("Output:", bubble_sort(arr))
+    
+    # Test Case 3: Random unsorted list
+    print("Test Case 3:")
+    arr = [3, 5, 2, 1, 4]
+    print("Input:", arr)
+    print("Output:", bubble_sort(arr))
+    
+    # Test Case 4: Already sorted list
+    print("Test Case 4:")
+    arr = [1, 2, 3, 4, 5]
+    print("Input:", arr)
+    print("Output:", bubble_sort(arr))
+    
+    # Test Case 5: Reverse sorted list
+    print("Test Case 5:")
+    arr = [5, 4, 3, 2, 1]
+    print("Input:", arr)
+    print("Output:", bubble_sort(arr))
+
+# Run test cases
+test_bubble_sort()
