@@ -1,0 +1,59 @@
+def find_mst(n, edges):
+    parent, rank = list(range(n)), [0] * n
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(x, y):
+        rootX, rootY = find(x), find(y)
+        if rootX != rootY:
+            if rank[rootX] > rank[rootY]:
+                parent[rootY] = rootX
+            elif rank[rootX] < rank[rootY]:
+                parent[rootX] = rootY
+            else:
+                parent[rootY] = rootX
+                rank[rootX] += 1
+
+    edges.sort(key=lambda e: e[2])
+    mst, total_weight = [], 0
+    for u, v, w in edges:
+        if find(u) != find(v):
+            union(u, v)
+            mst.append((u, v, w))
+            total_weight += w
+    return mst, total_weight
+
+def check_mst_unique(n, edges, given_mst):
+    mst, weight = find_mst(n, edges)
+    if sorted(mst) == sorted(given_mst):
+        return True, []
+    non_mst_edges = set(edges) - set(given_mst)
+    parent, rank = list(range(n)), [0] * n
+    for u, v, w in given_mst:
+        rootU, rootV = find(u), find(v)
+        if rootU != rootV:
+            parent[rootV] = rootU
+    for u, v, w in non_mst_edges:
+        if find(u) != find(v):
+            return False, find_mst(n, edges)[0]
+    return False, []
+
+# Test Case 1
+n1 = 4
+edges1 = [(0, 1, 10), (0, 2, 6), (0, 3, 5), (1, 3, 15), (2, 3, 4)]
+given_mst1 = [(2, 3, 4), (0, 3, 5), (0, 1, 10)]
+unique1, alt_mst1 = check_mst_unique(n1, edges1, given_mst1)
+print("Test Case 1 Output:")
+print("Is the given MST unique?", unique1)
+
+# Test Case 2
+n2 = 5
+edges2 = [(0, 1, 1), (0, 2, 1), (1, 3, 2), (2, 3, 2), (3, 4, 3), (4, 2, 3)]
+given_mst2 = [(0, 1, 1), (0, 2, 1), (1, 3, 2), (3, 4, 3)]
+unique2, alt_mst2 = check_mst_unique(n2, edges2, given_mst2)
+if not unique2:
+    print("Test Case 2 Output:")
+    print("Is the given MST unique?", unique2)
+    print("Another possible MST:", alt_mst2)
+    print("Total weight of MST:", sum(weight for _, _, weight in alt_mst2))
