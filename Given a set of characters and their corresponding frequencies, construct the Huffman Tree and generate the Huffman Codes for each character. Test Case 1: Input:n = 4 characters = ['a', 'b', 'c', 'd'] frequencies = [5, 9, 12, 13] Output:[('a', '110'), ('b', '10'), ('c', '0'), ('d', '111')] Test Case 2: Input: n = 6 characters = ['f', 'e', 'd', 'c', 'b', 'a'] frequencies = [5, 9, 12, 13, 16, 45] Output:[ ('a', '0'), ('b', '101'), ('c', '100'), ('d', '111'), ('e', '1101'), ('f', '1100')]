@@ -1,0 +1,51 @@
+import heapq
+from collections import defaultdict, Counter
+
+class Node:
+    def __init__(self, char, freq):
+        self.char = char
+        self.freq = freq
+        self.left = None
+        self.right = None
+
+    def __lt__(self, other):
+        return self.freq < other.freq
+
+def huffman_encoding(chars, freqs):
+    # Build the Huffman Tree
+    priority_queue = [Node(char, freq) for char, freq in zip(chars, freqs)]
+    heapq.heapify(priority_queue)
+    
+    while len(priority_queue) > 1:
+        left = heapq.heappop(priority_queue)
+        right = heapq.heappop(priority_queue)
+        merged = Node(None, left.freq + right.freq)
+        merged.left = left
+        merged.right = right
+        heapq.heappush(priority_queue, merged)
+    
+    # Generate Huffman Codes
+    def generate_codes(node, prefix='', codebook=defaultdict(str)):
+        if node:
+            if node.char is not None:
+                codebook[node.char] = prefix
+            generate_codes(node.left, prefix + '0', codebook)
+            generate_codes(node.right, prefix + '1', codebook)
+        return codebook
+    
+    root = priority_queue[0]
+    codes = generate_codes(root)
+    
+    return sorted(codes.items())
+
+# Test Case 1
+chars1 = ['a', 'b', 'c', 'd']
+freqs1 = [5, 9, 12, 13]
+print("Test Case 1 Output:", huffman_encoding(chars1, freqs1))  
+# Expected Output: [('a', '110'), ('b', '10'), ('c', '0'), ('d', '111')]
+
+# Test Case 2
+chars2 = ['f', 'e', 'd', 'c', 'b', 'a']
+freqs2 = [5, 9, 12, 13, 16, 45]
+print("Test Case 2 Output:", huffman_encoding(chars2, freqs2))  
+# Expected Output: [('a', '0'), ('b', '101'), ('c', '100'), ('d', '111'), ('e', '1101'), ('f', '1100')]
