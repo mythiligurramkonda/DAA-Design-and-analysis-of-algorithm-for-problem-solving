@@ -1,0 +1,52 @@
+import heapq
+
+def dijkstra(n, graph, source):
+    # Initialize distances with infinity and set source distance to 0
+    distances = [float('inf')] * n
+    distances[source] = 0
+    
+    # Priority queue to process vertices based on shortest distance
+    priority_queue = [(0, source)]  # (distance, vertex)
+    
+    while priority_queue:
+        # Extract the vertex with the smallest distance
+        current_distance, u = heapq.heappop(priority_queue)
+        
+        # If the extracted distance is greater than the recorded distance, skip
+        if current_distance > distances[u]:
+            continue
+        
+        # Process each neighbor of vertex u
+        for v in range(n):
+            if graph[u][v] != float('inf'):
+                distance = graph[u][v]
+                # Check if a shorter path to v is found
+                if distances[u] + distance < distances[v]:
+                    distances[v] = distances[u] + distance
+                    # Add updated distance to the priority queue
+                    heapq.heappush(priority_queue, (distances[v], v))
+    
+    return distances
+
+# Test Case 1
+n1 = 5
+graph1 = [
+    [0, 10, 3, float('inf'), float('inf')],
+    [float('inf'), 0, 1, 2, float('inf')],
+    [float('inf'), 4, 0, 8, 2],
+    [float('inf'), float('inf'), float('inf'), 0, 7],
+    [float('inf'), float('inf'), float('inf'), 9, 0]
+]
+source1 = 0
+print("Test Case 1 Output:", dijkstra(n1, graph1, source1))  # Expected Output: [0, 7, 3, 9, 5]
+
+# Test Case 2
+n2 = 4
+graph2 = [
+    [0, 5, float('inf'), 10],
+    [float('inf'), 0, 3, float('inf')],
+    [float('inf'), float('inf'), 0, 1],
+    [float('inf'), float('inf'), float('inf'), 0]
+]
+source2 = 0
+print("Test Case 2 Output:", dijkstra(n2, graph2, source2))  # Expected Output: [0, 5, 8, 9]
