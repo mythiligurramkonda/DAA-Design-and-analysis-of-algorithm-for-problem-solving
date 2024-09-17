@@ -1,0 +1,36 @@
+from collections import defaultdict
+
+def four_sum_count(A, B, C, D):
+    # Dictionary to store the sum of all pairs from A and B
+    sum_ab = defaultdict(int)
+    
+    # Compute all possible sums of pairs from A and B
+    for a in A:
+        for b in B:
+            sum_ab[a + b] += 1
+    
+    # Initialize count for the number of valid tuples
+    count = 0
+    
+    # For each pair from C and D, check how many complements exist in sum_ab
+    for c in C:
+        for d in D:
+            # The complement needed to make the sum zero
+            complement = -(c + d)
+            if complement in sum_ab:
+                count += sum_ab[complement]
+    
+    return count
+
+# Test cases
+A1 = [1, 2]
+B1 = [-2, -1]
+C1 = [-1, 2]
+D1 = [0, 2]
+print("Output:", four_sum_count(A1, B1, C1, D1))  # Expected Output: 2
+
+A2 = [0]
+B2 = [0]
+C2 = [0]
+D2 = [0]
+print("Output:", four_sum_count(A2, B2, C2, D2))  # Expected Output: 1
