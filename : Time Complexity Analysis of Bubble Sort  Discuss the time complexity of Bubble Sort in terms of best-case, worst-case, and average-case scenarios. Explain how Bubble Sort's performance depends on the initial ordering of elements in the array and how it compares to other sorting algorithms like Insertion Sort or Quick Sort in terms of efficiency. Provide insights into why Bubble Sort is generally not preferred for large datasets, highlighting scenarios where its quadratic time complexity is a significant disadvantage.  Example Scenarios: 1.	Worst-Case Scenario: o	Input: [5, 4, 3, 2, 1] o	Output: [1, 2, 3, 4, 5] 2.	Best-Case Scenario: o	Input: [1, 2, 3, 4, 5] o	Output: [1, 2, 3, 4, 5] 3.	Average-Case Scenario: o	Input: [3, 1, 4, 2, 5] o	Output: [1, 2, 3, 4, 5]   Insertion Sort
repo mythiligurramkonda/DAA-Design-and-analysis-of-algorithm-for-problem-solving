@@ -1,0 +1,45 @@
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        swapped = False
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        if not swapped:
+            break
+    return arr
+
+def test_bubble_sort():
+    # Test Case 1: Worst-case scenario
+    arr = [5, 4, 3, 2, 1]
+    print("Test Case 1 - Worst Case:")
+    print("Input:", arr)
+    print("Output:", bubble_sort(arr))
+    
+    # Test Case 2: Best-case scenario
+    arr = [1, 2, 3, 4, 5]
+    print("Test Case 2 - Best Case:")
+    print("Input:", arr)
+    print("Output:", bubble_sort(arr))
+    
+    # Test Case 3: Average-case scenario
+    arr = [3, 1, 4, 2, 5]
+    print("Test Case 3 - Average Case:")
+    print("Input:", arr)
+    print("Output:", bubble_sort(arr))
+    
+    # Test Case 4: Already sorted list
+    arr = [1, 2, 3, 4, 5]
+    print("Test Case 4 - Already Sorted:")
+    print("Input:", arr)
+    print("Output:", bubble_sort(arr))
+    
+    # Test Case 5: Reverse sorted list
+    arr = [5, 4, 3, 2, 1]
+    print("Test Case 5 - Reverse Sorted:")
+    print("Input:", arr)
+    print("Output:", bubble_sort(arr))
+
+# Run test cases
+test_bubble_sort()
