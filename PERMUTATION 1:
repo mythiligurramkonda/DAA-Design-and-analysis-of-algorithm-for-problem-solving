@@ -1,0 +1,27 @@
+def permute(nums):
+    def backtrack(start):
+        # If all integers are used in the current permutation
+        if start == len(nums):
+            result.append(nums[:])
+            return
+        for i in range(start, len(nums)):
+            # Swap the current index with the start index
+            nums[start], nums[i] = nums[i], nums[start]
+            # Recur to generate permutations for the next index
+            backtrack(start + 1)
+            # Swap back to restore the original array
+            nums[start], nums[i] = nums[i], nums[start]
+
+    result = []
+    backtrack(0)
+    return result
+
+# Example Test Cases
+nums1 = [1, 2, 3]
+print("Output for Example 1:", permute(nums1))
+
+nums2 = [0, 1]
+print("Output for Example 2:", permute(nums2))
+
+nums3 = [1]
+print("Output for Example 3:", permute(nums3))
