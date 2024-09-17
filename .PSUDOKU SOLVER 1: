@@ -1,0 +1,53 @@
+def solve_sudoku(board):
+    def is_valid(board, row, col, num):
+        # Check if num is not in the current row
+        for c in range(9):
+            if board[row][c] == num:
+                return False
+        # Check if num is not in the current column
+        for r in range(9):
+            if board[r][col] == num:
+                return False
+        # Check if num is not in the current 3x3 sub-box
+        start_row, start_col = 3 * (row // 3), 3 * (col // 3)
+        for r in range(start_row, start_row + 3):
+            for c in range(start_col, start_col + 3):
+                if board[r][c] == num:
+                    return False
+        return True
+
+    def solve():
+        for row in range(9):
+            for col in range(9):
+                if board[row][col] == '.':
+                    for num in '123456789':
+                        if is_valid(board, row, col, num):
+                            board[row][col] = num
+                            if solve():
+                                return True
+                            board[row][col] = '.'
+                    return False
+        return True
+
+    solve()
+    return board
+
+# Example input
+board = [
+    ["5", "3", ".", ".", "7", ".", ".", ".", "."],
+    ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+    [".", "9", "8", ".", ".", ".", ".", "6", "."],
+    ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+    ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+    ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+    [".", "6", ".", ".", ".", ".", "2", "8", "."],
+    [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+    [".", ".", ".", ".", "8", ".", ".", "7", "9"]
+]
+
+# Solve Sudoku
+solution = solve_sudoku(board)
+
+# Output the solved Sudoku board
+for row in solution:
+    print(row)
