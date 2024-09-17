@@ -1,0 +1,62 @@
+def median_of_medians(arr, k):
+    def partition(arr, low, high, pivot_index):
+        pivot_value = arr[pivot_index]
+        # Move pivot to end
+        arr[pivot_index], arr[high] = arr[high], arr[pivot_index]
+        store_index = low
+        # Move all smaller elements to the left
+        for i in range(low, high):
+            if arr[i] < pivot_value:
+                arr[store_index], arr[i] = arr[i], arr[store_index]
+                store_index += 1
+        # Move pivot to its final place
+        arr[high], arr[store_index] = arr[store_index], arr[high]
+        return store_index
+
+    def median_of_medians(arr, low, high):
+        if high - low + 1 <= 5:
+            # If there are 5 or fewer elements, sort and return the median
+            sub_list = arr[low:high+1]
+            sub_list.sort()
+            return sub_list[len(sub_list) // 2]
+        
+        # Divide arr into groups of 5
+        medians = []
+        for i in range(low, high + 1, 5):
+            sub_list = arr[i:min(i + 5, high + 1)]
+            sub_list.sort()
+            medians.append(sub_list[len(sub_list) // 2])
+        
+        # Recursively find the median of medians
+        return median_of_medians(medians, 0, len(medians) - 1)
+
+    def select(arr, low, high, k):
+        if low == high:
+            return arr[low]
+        
+        # Choose the pivot using median of medians
+        pivot = median_of_medians(arr, low, high)
+        pivot_index = arr.index(pivot)
+        # Partition the array around the pivot
+        pivot_index = partition(arr, low, high, pivot_index)
+        
+        # Recursively find the k-th smallest element
+        if k == pivot_index:
+            return arr[k]
+        elif k < pivot_index:
+            return select(arr, low, pivot_index - 1, k)
+        else:
+            return select(arr, pivot_index + 1, high, k)
+
+    # Convert k to zero-based index
+    k -= 1
+    return select(arr, 0, len(arr) - 1, k)
+
+# Test cases
+arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+k1 = 6
+print("The {}-th smallest element is: {}".format(k1, median_of_medians(arr1, k1)))
+
+arr2 = [23, 17, 31, 44, 55, 21, 20, 18, 19, 27]
+k2 = 5
+print("The {}-th smallest element is: {}".format(k2, median_of_medians(arr2, k2)))
